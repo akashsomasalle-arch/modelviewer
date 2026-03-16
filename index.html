@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>3D Model Viewer</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <script type="module" crossorigin src="./assets/index-DC0bukbU.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-8bOEzuwE.css">
+  </head>
+
+  <body>
+    <div id="webgi-canvas-container">
+      <canvas id="webgi-canvas"></canvas>
+      <!-- Model Name -->
+      <div id="model-name"></div>
+      <!-- Model Selection Icons -->
+      <div id="model-icons">
+        <div class="model-icon">
+          <img src="./assets/helmet-CcUQU9eC.png" data-model="helmet" alt="helmet" />
+          <span class="model-tooltip">Helmet</span>
+        </div>
+
+        <div class="model-icon">
+          <img
+            src="./assets/exhaust-DJ1OdcE4.png"
+            data-model="exhaust"
+            alt="exhaust"
+          />
+          <span class="model-tooltip">Exhaust</span>
+        </div>
+
+        <div class="model-icon">
+          <img
+            src="./assets/fueltank-D3cRhY78.png"
+            data-model="fueltank"
+            alt="fueltank"
+          />
+          <span class="model-tooltip">Fuel Tank</span>
+        </div>
+
+        <div class="model-icon">
+          <img src="./assets/jacket-DDgxDzf1.png" data-model="jacket" alt="jacket" />
+          <span class="model-tooltip">Jacket</span>
+        </div>
+
+        <div class="model-icon">
+          <img src="./assets/mirror-vfOJb3Z_.png" data-model="mirror" alt="mirror" />
+          <span class="model-tooltip">Mirror</span>
+        </div>
+
+        <div class="model-icon">
+          <img
+            src="./assets/suspension-CEpohV7y.png"
+            data-model="suspension"
+            alt="suspension"
+          />
+          <span class="model-tooltip">Suspension</span>
+        </div>
+      </div>
+      <!-- Loader with progress bar -->
+      <div id="loaderDiv" class="loader">
+        <div class="loader-content">
+          <h2 class="loader-title">LOADING 3D MODEL..</h2>
+
+          <div class="progress-bar">
+            <div class="progress-fill"  id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Viewer Controls -->
+      <div id="viewer-controls">
+        <!-- Animation Control -->
+        <div class="animation-icon control-btn" id="animationControl">
+          <img
+            id="playIcon"
+            src="data:image/webp;base64,UklGRsIAAABXRUJQVlA4WAoAAAAQAAAAFwAAFwAAVlA4TKQAAAAvF8AFEP8w//M//wraSFKT2d17ZnLwcQAQAA9DAkEMLAgRQERFQ0LCB9HxEGGI6PAACgyEg0iSFOmZ6Z5507/No4UTENF/BW7bKBke4ysAAAAAAAAAAABgsqnWcayfv8d5MY5gG0IIt/0khlr/r8Msgkbyvu6mvbSST7XsoyP5Xlajfppr3E/zTrorj/HEF6K7RE4UfZ+x9x/7XtHvm+E/DOqvAQ=="
+            alt="Play Animation"
+          />
+          <img
+            id="pauseIcon"
+            src="data:image/webp;base64,UklGRp4AAABXRUJQVlA4WAoAAAAQAAAAFwAAFwAAVlA4TH8AAAAvF8AFEIcw//M//4oiSWrTdTkBv2QABbyIAyYGFBOAiwMC4IOAeCgAAI4bSVKk5Z3lCv/NPeZ7RvRfQdoGTA3sqgAAAAAAAAAAAICqHUsZauqhlLGtLmnmI9kmpi055uaSbk+SheUksHeX9Dn5WFnPDPT/A/fvdf++9//hrb4GAA=="
+            alt="Pause Animation"
+          />
+
+          <div class="tooltip" id="tooltip-play">Play Animation</div>
+          <div class="tooltip" id="tooltip-pause">Pause Animation</div>
+        </div>
+        <!-- Auto Rotate Toggle -->
+        <div id="auto-rotate-toggle" class="control-btn">
+          <img
+            id="rotate-icon"
+            src="data:image/webp;base64,UklGRjYBAABXRUJQVlA4WAoAAAAQAAAAFwAAFgAAVlA4TBgBAAAvF4AFEOeioG0bxvxJtzsg5n/+HbZt5Mg50BMu/2cGgAAWjQIUAKAAsPCQB4CgAYsXwaBRgD8aBQgAghtB48YBCG4soACDABqFAKDRKJwIIAgCD4UBAAQFCCDYtnW8+WLbtm0bbVNbOfMfSIwBRPRfgds2SobH+AoAAAAAAAAAAAAAAAAAAFDU7UeiegqfGfVz5Ig2Z75//7v+e5vWotJ9mbLyNa9EPS8xf6b3PjHvsc7EJ9upFqbaKrRD8k6/t4votnYojsVmH7vDyqMdAquUFLL2ZXCzC+ttYbch/dN0i8XIKANt7qOh2DPQ1nx9/FzfGCh9D+Ji773JzImH/6EOh1dx+Epn1bbruOu3qI9/r6tBopFzwV8G"
+            alt="Auto Rotate"
+          />
+          <span class="icon-tooltip active">Auto Rotate</span>
+        </div>
+      </div>
+      <div id="ui-toggle" class="control-btn">
+        <img id="hideUi" src="data:image/webp;base64,UklGRpgBAABXRUJQVlA4WAoAAAAQAAAAFwAAFwAAVlA4THkBAAAvF8AFEKeioG0bxvxJtzsg5n/+GbZt4zgG+nr7zwyBQwEEQQAFABD8gI6NBoCOAgCAYAOgoANgI4AB+AFBRbAAHQAQwMHAwoaHAQA4gIICAKjwADGSbdPWs23btu1vrZV/LP/v8269n0FE/xW2bdsk3btyriBJkiRJkiRJkmRt7H7QRug+mNxdLIKkMVpuNEoRo2ZavC4C+dnl5fv7+TzNeTRScIHtKwAAwMvEqT0JPM1b7fkTgGP2Lod87sX7T8FvMvvjmy9glVSybdOxBxfoZuq1sD68AbCzknT08L20/07Kos+5Pi6TXQeZvgHfVYt78Q7gI+yfA7imyIGc2zb/3SMPqJnbclJfw+QeMVNL3jFQO5j7/8DKZFrp3NKyRKDFBazcU5AlPYcctAewCd+B/QFwsCngUmvgaxP3m83qPZvUHejsSeHfblcF7FtRQxjXVNFLwCpyaySvou/PyylhELk1AkSNh2YlZpJ7/hM5Qz6YxvVHY1NHAgA=" alt="Hide UI" />
+        <img id="showUi" src="data:image/webp;base64,UklGRjYBAABXRUJQVlA4WAoAAAAQAAAAFwAAFwAAVlA4TBcBAAAvF8AFEHcx//M//4zbNnIchWxvDnf/jQPBAIIRBIJgPASgoaIAFAyAhY2BHx0TG6ADgAdggA5hwwhABQACcBjZttIgcXdPcId7+m8PiRcQ0X8FbtsoYz58BQAAAAAAAAAAAAAAAAAAAAAAAACAtdgfj/uF9coa725RWlVpdNuOn/LwmkmSJGXX4RPehJIS53RyEknhpsMrVyq95cS2J0uvlLxVi/u+JG8Oo8PcnHuS/D4wODfZJdBT4ZjLJnkewDqW5EzAmEr5fOJIitdwaU5/ske96V3SwT41+7g8gUM96yk8ceZFs4981nGelJhOLuWPbkkzKGgNMmeHZ4Pa9+m9uk939fb9v/1ez993233f3fjd//B3/wwA" alt="Show UI" />
+
+        <div class="tooltip" id="tooltip-hide">Hide UI</div>
+        <div class="tooltip" id="tooltip-show">Show UI</div>
+      </div>
+    </div>
+
+  </body>
+</html>
